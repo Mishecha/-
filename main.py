@@ -15,8 +15,8 @@ load_dotenv()
 api_key = os.environ['API_KEY']
 token = os.environ['TOKEN']
 bot = telegram.Bot(token=token)
-bot.send_message(chat_id='@abc10101a', text=" ")
-
+#bot.send_message(chat_id='@abc10101a', text=" ")
+bot.send_document(chat_id='@abc10101a', document=open('image_nasa/0image_nasa.gif', 'rb'))
 
 image_dir_nasa_epic = 'image_nasa_epic'
 image_dir_nasa = 'image_nasa'
