@@ -6,13 +6,16 @@ from pprint import pprint
 import datetime
 from dotenv import load_dotenv
 import os
+import telegram
 
 
 load_dotenv()
 
 
 api_key = os.environ['API_KEY']
-
+token = os.environ['TOKEN']
+bot = telegram.Bot(token=token)
+bot.send_message(chat_id='@abc10101a', text=" ")
 
 
 image_dir_nasa_epic = 'image_nasa_epic'
