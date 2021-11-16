@@ -9,7 +9,11 @@ import os
 
 
 load_dotenv()
+
+
 api_key = os.environ['API_KEY']
+
+
 
 image_dir_nasa_epic = 'image_nasa_epic'
 image_dir_nasa = 'image_nasa'
@@ -83,7 +87,7 @@ def get_nasa():
 def get_SpaceX():
     response = requests.get(url_SpaceX)
     response.raise_for_status()
-    link_SpaceX = response.json()[66]['links']['flickr_images']
+    link_SpaceX = response.json()[66]['links']['flickr']['original']
 
     for number, image in enumerate(link_SpaceX):
         response = requests.get(image)
@@ -94,9 +98,4 @@ def get_SpaceX():
 
 
 downloading_images()
-get_nasa_epic()
 get_SpaceX()
-get_nasa()
-
-
-#2132631430:AAFKMC8P7-rURZPvTMypAPSrUTDOPYIdxVg
