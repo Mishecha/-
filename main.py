@@ -1,46 +1,19 @@
 from pathlib import Path
-import requests
 from urllib.parse import urlparse
-import os.path
-from pprint import pprint
-import datetime
 from dotenv import load_dotenv
+
+import os.path
 import os
+
 import telegram
+import random
+import requests
+
+import time
+import datetime
 
 
-load_dotenv()
-
-
-api_key = os.environ['API_KEY']
-token = os.environ['TOKEN']
-bot = telegram.Bot(token=token)
-#bot.send_message(chat_id='@abc10101a', text=" ")
-bot.send_document(chat_id='@abc10101a', document=open('image_nasa/0image_nasa.gif', 'rb'))
-
-image_dir_nasa_epic = 'image_nasa_epic'
-image_dir_nasa = 'image_nasa'
-image_dir_SpaceX = 'image_SpaceX'
-
-file_name_nasa_epic = 'image_nasa_epic.png'
-file_name_nasa = 'image_nasa'
-file_name_SpaceX = 'image_SpaceX.jpeg'
-
-url_nasa = 'https://api.nasa.gov/planetary/apod'
-url_SpaceX = 'https://api.spacexdata.com/v4/launches'
-
-
-params_nasa = {
-    'count': 30,
-    'api_key': api_key
-}
-
-params_nasa_epic = {
-    'api_key': api_key
-}
-
-
-def downloading_images():
+def create_folders_for_pictures():
     Path("image_nasa").mkdir(parents=True, exist_ok=True)
     Path("image_SpaceX").mkdir(parents=True, exist_ok=True)
     Path("image_nasa_epic").mkdir(parents=True, exist_ok=True)
@@ -54,6 +27,10 @@ def get_expansion(user_link):
 
 
 def get_nasa_epic():
+    params_nasa_epic = {
+        'api_key': api_key
+    }
+    file_name_nasa_epic = 'image_nasa_epic.png'
     url_nasa_epic = 'https://api.nasa.gov/EPIC/api/natural/images'
     response = requests.get(url_nasa_epic, params=params_nasa_epic)
     response.raise_for_status()
@@ -76,6 +53,12 @@ def get_nasa_epic():
 
 
 def get_nasa():
+    file_name_nasa = 'image_nasa'
+    params_nasa = {
+        'count': 30,
+        'api_key': api_key
+    }
+    url_nasa = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(url_nasa, params=params_nasa)
     response.raise_for_status()
 
@@ -88,8 +71,12 @@ def get_nasa():
 
 
 def get_SpaceX():
+    file_name_SpaceX = 'image_SpaceX.jpeg'
+    url_SpaceX = 'https://api.spacexdata.com/v4/launches'
+
     response = requests.get(url_SpaceX)
     response.raise_for_status()
+
     link_SpaceX = response.json()[66]['links']['flickr']['original']
 
     for number, image in enumerate(link_SpaceX):
@@ -100,5 +87,26 @@ def get_SpaceX():
             file.write(response.content)
 
 
-downloading_images()
-get_SpaceX()
+if __name__ == "__main__":
+    create_folders_for_pictures()
+    
+    load_dotenv()
+    api_key = os.environ['API_KEY']
+    token = os.environ['TOKEN']
+
+
+    image_dir_nasa_epic = 'image_nasa_epic'
+    image_dir_nasa = 'image_nasa'
+    image_dir_SpaceX = 'image_SpaceX'
+
+
+    name_dir = [image_dir_nasa_epic, image_dir_SpaceX, image_dir_nasa]
+    bot = telegram.Bot(token=token)
+    while True:
+        get_nasa()
+        get_SpaceX()
+        get_nasa_epic()
+        random_dir = random.choice(name_dir)
+        random_file = random.choice(os.listdir(random_dir))
+        bot.send_document(chat_id='@abc10101a', document=open(f'{random_dir}/{random_file}', 'rb'))
+        time.sleep(86400)
