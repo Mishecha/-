@@ -89,11 +89,11 @@ def get_SpaceX():
 
 if __name__ == "__main__":
     create_folders_for_pictures()
-    
+
     load_dotenv()
     api_key = os.environ['API_KEY']
     token = os.environ['TOKEN']
-
+    delay = os.environ['DELAY']
 
     image_dir_nasa_epic = 'image_nasa_epic'
     image_dir_nasa = 'image_nasa'
@@ -109,4 +109,4 @@ if __name__ == "__main__":
         random_dir = random.choice(name_dir)
         random_file = random.choice(os.listdir(random_dir))
         bot.send_document(chat_id='@abc10101a', document=open(f'{random_dir}/{random_file}', 'rb'))
-        time.sleep(86400)
+        time.sleep(delay)
