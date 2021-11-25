@@ -26,9 +26,9 @@ def get_extension(user_link):
     return splitext[1]
 
 
-def get_nasa_epic():
+def get_nasa_epic(nasa_api_key):
     params_nasa_epic = {
-        'api_key': api_key
+        'api_key': nasa_api_key
     }
     file_name_nasa_epic = 'image_nasa_epic.png'
     url_nasa_epic = 'https://api.nasa.gov/EPIC/api/natural/images'
@@ -52,11 +52,11 @@ def get_nasa_epic():
             file.write(response.content)
 
 
-def get_nasa():
+def get_nasa(nasa_api_key):
     file_name_nasa = 'image_nasa'
     params_nasa = {
         'count': 30,
-        'api_key': api_key
+        'api_key': nasa_api_key
     }
     url_nasa = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(url_nasa, params=params_nasa)
