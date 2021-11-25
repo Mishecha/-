@@ -91,8 +91,8 @@ if __name__ == "__main__":
     create_folders_for_pictures()
 
     load_dotenv()
-    api_key = os.environ['API_KEY']
-    token = os.environ['TOKEN']
+    nasa_api_key = os.environ['NASA_API_KEY']
+    telegram_token = os.environ['TELEGRAM_TOKEN']
     delay = os.environ['DELAY']
 
     image_dir_nasa_epic = 'image_nasa_epic'
