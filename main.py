@@ -19,7 +19,7 @@ def create_folders_for_pictures():
     Path("image_nasa_epic").mkdir(parents=True, exist_ok=True)
 
 
-def get_expansion(user_link):
+def get_extension(user_link):
     parsed_link = urlparse(user_link)
     path = parsed_link.path
     splitext = os.path.splitext(path)
@@ -66,7 +66,7 @@ def get_nasa():
         response = requests.get(image['url'])
         response.raise_for_status()
 
-        with open(f'{image_dir_nasa}/{number}{file_name_nasa}{get_expansion(image["url"])}', 'wb') as file:
+        with open(f'{image_dir_nasa}/{number}{file_name_nasa}{get_extension(image["url"])}', 'wb') as file:
             file.write(response.content)
 
 
