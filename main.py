@@ -35,7 +35,7 @@ def get_nasa_epic(nasa_api_key):
     response = requests.get(nasa_epic_url, params=nasa_epic_params)
     response.raise_for_status()
 
-    nasa_epic_pictures = response.json()[0:9]
+    nasa_epic_pictures = response.json()[:9]
     for number, image in enumerate(nasa_epic_pictures):
         nasa_epic_image = image['image']
         nasa_epic_date = image['date']
