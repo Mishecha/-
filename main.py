@@ -94,6 +94,7 @@ if __name__ == "__main__":
     nasa_api_key = os.environ['NASA_API_KEY']
     telegram_token = os.environ['TELEGRAM_TOKEN']
     delay = os.environ['DELAY']
+    telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
 
     nasa_epic_image_dir = 'image_nasa_epic'
     nasa_image_dir = 'image_nasa'
@@ -111,6 +112,6 @@ if __name__ == "__main__":
         random_dir = random.choice(name_dir)
         random_file = random.choice(os.listdir(random_dir))
         with open(f'{random_dir}/{random_file}', 'rb') as file:
-            bot.send_document(chat_id='@abc10101a', document=file)
+            bot.send_document(chat_id=telegram_chat_id, document=file)
 
         time.sleep(delay)
