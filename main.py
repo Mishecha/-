@@ -27,28 +27,28 @@ def get_extension(user_link):
 
 
 def get_nasa_epic(nasa_api_key):
-    params_nasa_epic = {
+    nasa_epic_params = {
         'api_key': nasa_api_key
     }
-    file_name_nasa_epic = 'image_nasa_epic.png'
-    url_nasa_epic = 'https://api.nasa.gov/EPIC/api/natural/images'
-    response = requests.get(url_nasa_epic, params=params_nasa_epic)
+    nasa_epic_file_name = 'image_nasa_epic.png'
+    nasa_epic_url = 'https://api.nasa.gov/EPIC/api/natural/images'
+    response = requests.get(nasa_epic_url, params=nasa_epic_params)
     response.raise_for_status()
 
-    lists_nasa_epic = response.json()[0:9]
-    for number, image in enumerate(lists_nasa_epic):
-        image_nasa_epic = image['image']
-        date_nasa_epic = image['date']
+    nasa_epic_pictures = response.json()[0:9]
+    for number, image in enumerate(nasa_epic_pictures):
+        nasa_epic_image = image['image']
+        nasa_epic_date = image['date']
 
-        date_time_obj = datetime.datetime.strptime(date_nasa_epic, '%Y-%m-%d  %H:%M:%S')
-        formatted_date = date_time_obj.strftime('%Y/%m/%d')
+        obj_date_time = datetime.datetime.strptime(nasa_epic_date, '%Y-%m-%d  %H:%M:%S')
+        format_date = obj_date_time.strftime('%Y/%m/%d')
 
-        url_nasa_epic = f'https://api.nasa.gov/EPIC/archive/natural/{formatted_date}/png/{image_nasa_epic}.png'
+        nasa_epic_url = f'https://api.nasa.gov/EPIC/archive/natural/{format_date}/png/{nasa_epic_image}.png'
 
-        response = requests.get(url_nasa_epic, params=params_nasa_epic)
+        response = requests.get(nasa_epic_url, params=nasa_epic_params)
         response.raise_for_status()
 
-        with open(f'{image_dir_nasa_epic}/{number}{file_name_nasa_epic}', 'wb') as file:
+        with open(f'{nasa_epic_image_dir}/{number}{nasa_epic_file_name}', 'wb') as file:
             file.write(response.content)
 
 
@@ -66,24 +66,24 @@ def get_nasa(nasa_api_key):
         response = requests.get(image['url'])
         response.raise_for_status()
 
-        with open(f'{image_dir_nasa}/{number}{file_name_nasa}{get_extension(image["url"])}', 'wb') as file:
+        with open(f'{nasa_image_dir}/{number}{file_name_nasa}{get_extension(image["url"])}', 'wb') as file:
             file.write(response.content)
 
 
 def get_SpaceX():
-    file_name_SpaceX = 'image_SpaceX.jpeg'
-    url_SpaceX = 'https://api.spacexdata.com/v4/launches'
+    spacex_file_name = 'image_SpaceX.jpeg'
+    url_spacex = 'https://api.spacexdata.com/v4/launches'
 
-    response = requests.get(url_SpaceX)
+    response = requests.get(url_spacex)
     response.raise_for_status()
 
-    link_SpaceX = response.json()[66]['links']['flickr']['original']
+    spacex_link = response.json()[66]['links']['flickr']['original']
 
-    for number, image in enumerate(link_SpaceX):
+    for number, image in enumerate(spacex_link):
         response = requests.get(image)
         response.raise_for_status()
 
-        with open(f'{image_dir_SpaceX}/{number}{file_name_SpaceX}', 'wb') as file:
+        with open(f'{spacex_image_dir}/{number}{spacex_file_name}', 'wb') as file:
             file.write(response.content)
 
 
@@ -95,13 +95,13 @@ if __name__ == "__main__":
     telegram_token = os.environ['TELEGRAM_TOKEN']
     delay = os.environ['DELAY']
 
-    image_dir_nasa_epic = 'image_nasa_epic'
-    image_dir_nasa = 'image_nasa'
-    image_dir_SpaceX = 'image_SpaceX'
+    nasa_epic_image_dir = 'image_nasa_epic'
+    nasa_image_dir = 'image_nasa'
+    spacex_image_dir = 'image_SpaceX'
 
 
-    name_dir = [image_dir_nasa_epic, image_dir_SpaceX, image_dir_nasa]
-    bot = telegram.Bot(token=token)
+    name_dir = [nasa_epic_image_dir, spacex_image_dir, nasa_image_dir]
+    bot = telegram.Bot(token=telegram_token)
     while True:
         get_nasa()
         get_SpaceX()
