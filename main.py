@@ -110,5 +110,7 @@ if __name__ == "__main__":
         get_nasa_epic()
         random_dir = random.choice(name_dir)
         random_file = random.choice(os.listdir(random_dir))
-        bot.send_document(chat_id='@abc10101a', document=open(f'{random_dir}/{random_file}', 'rb'))
+        with open(f'{random_dir}/{random_file}', 'rb') as file:
+            bot.send_document(chat_id='@abc10101a', document=file)
+
         time.sleep(delay)
