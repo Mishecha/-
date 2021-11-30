@@ -35,7 +35,7 @@ def get_nasa_epic(nasa_api_key):
     response = requests.get(nasa_epic_url, params=nasa_epic_params)
     response.raise_for_status()
 
-    nasa_epic_pictures = response.json()[:9]
+    nasa_epic_pictures = response.json()[:number_images]
     for number, image in enumerate(nasa_epic_pictures):
         nasa_epic_image = image['image']
         nasa_epic_date = image['date']
@@ -77,7 +77,7 @@ def get_SpaceX():
     response = requests.get(url_spacex)
     response.raise_for_status()
 
-    spacex_link = response.json()[66]['links']['flickr']['original']
+    spacex_link = response.json()[spacex_last_launch]['links']['flickr']['original']
 
     for number, image in enumerate(spacex_link):
         response = requests.get(image)
@@ -99,6 +99,8 @@ if __name__ == "__main__":
     nasa_image_dir = 'image_nasa'
     spacex_image_dir = 'image_SpaceX'
 
+    spacex_last_launch = 66
+    number_images = 9
 
     name_dir = [nasa_epic_image_dir, spacex_image_dir, nasa_image_dir]
     bot = telegram.Bot(token=telegram_token)
