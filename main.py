@@ -13,10 +13,18 @@ import time
 import datetime
 
 
+def download_images(url, name, params2=0):
+    response = requests.get(url, params=params2)
+    response.raise_for_status()
+
+    with open(name, 'wb') as file:
+        file.write(response.content)
+
+
 def create_folders_for_pictures():
-    Path("image_nasa").mkdir(parents=True, exist_ok=True)
-    Path("image_SpaceX").mkdir(parents=True, exist_ok=True)
-    Path("image_nasa_epic").mkdir(parents=True, exist_ok=True)
+  folders_with_pictures_space = ["image_nasa", "image_SpaceX", "image_nasa_epic"]
+  for folder in folders_with_pictures_space:
+      Path(folder).mkdir(parents=True, exist_ok=True)
 
 
 def get_extension(user_link):
@@ -45,11 +53,7 @@ def get_nasa_epic(nasa_api_key):
 
         nasa_epic_url = f'https://api.nasa.gov/EPIC/archive/natural/{format_date}/png/{nasa_epic_image}.png'
 
-        response = requests.get(nasa_epic_url, params=nasa_epic_params)
-        response.raise_for_status()
-
-        with open(f'{nasa_epic_image_dir}/{number}{nasa_epic_file_name}', 'wb') as file:
-            file.write(response.content)
+        download_images(nasa_epic_url, f'{nasa_epic_image_dir}/{number}{nasa_epic_file_name}', nasa_epic_params)
 
 
 def get_nasa(nasa_api_key):
@@ -58,23 +62,19 @@ def get_nasa(nasa_api_key):
         'count': 30,
         'api_key': nasa_api_key
     }
-    url_nasa = 'https://api.nasa.gov/planetary/apod'
-    response = requests.get(url_nasa, params=params_nasa)
+    nasa_url = 'https://api.nasa.gov/planetary/apod'
+    response = requests.get(nasa_url, params=params_nasa)
     response.raise_for_status()
 
     for number, image in enumerate(response.json()):
-        response = requests.get(image['url'])
-        response.raise_for_status()
-
-        with open(f'{nasa_image_dir}/{number}{file_name_nasa}{get_extension(image["url"])}', 'wb') as file:
-            file.write(response.content)
+        download_images(nasa_url, f'{nasa_image_dir}/{number}{file_name_nasa}{get_extension(image["url"])}', params_nasa)
 
 
 def get_SpaceX():
     spacex_file_name = 'image_SpaceX.jpeg'
-    url_spacex = 'https://api.spacexdata.com/v4/launches'
+    spacex_url = 'https://api.spacexdata.com/v4/launches'
 
-    response = requests.get(url_spacex)
+    response = requests.get(spacex_url)
     response.raise_for_status()
 
     spacex_link = response.json()[spacex_last_launch]['links']['flickr']['original']
@@ -83,8 +83,7 @@ def get_SpaceX():
         response = requests.get(image)
         response.raise_for_status()
 
-        with open(f'{spacex_image_dir}/{number}{spacex_file_name}', 'wb') as file:
-            file.write(response.content)
+        download_images(spacex_url, f'{spacex_image_dir}/{number}{spacex_file_name}{get_extension(image["url"])}')
 
 
 if __name__ == "__main__":
@@ -103,15 +102,18 @@ if __name__ == "__main__":
     spacex_last_launch = 66
     number_images = 9
 
+
     name_dir = [nasa_epic_image_dir, spacex_image_dir, nasa_image_dir]
     bot = telegram.Bot(token=telegram_token)
     while True:
-        get_nasa()
-        get_SpaceX()
-        get_nasa_epic()
-        random_dir = random.choice(name_dir)
-        random_file = random.choice(os.listdir(random_dir))
-        with open(f'{random_dir}/{random_file}', 'rb') as file:
-            bot.send_document(chat_id=telegram_chat_id, document=file)
+      get_nasa(nasa_api_key)
+      get_SpaceX()
+      get_nasa_epic()
 
-        time.sleep(delay)
+      random_dir = random.choice(name_dir)
+      random_file = random.choice(os.listdir(random_dir))
+
+      with open(f'{random_dir}/{random_file}', 'rb') as file:
+          bot.send_document(chat_id=telegram_chat_id, document=file)
+
+      time.sleep(delay)
