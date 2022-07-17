@@ -13,7 +13,7 @@ TELEGRAM_TOKEN=токен бота
 ```
 
 #### API токен наса
-Найти этот токен можно посмотреть [здесь](https://api.nasa.gov/). Также вставить токен апи наса.
+Найти этот токен можно посмотреть [здесь](https://api.nasa.gov/). Также вставете токен API nasa.
 В env нужно написать так:
 ```
 NASA_API_KEY=токен nasa
@@ -24,12 +24,14 @@ NASA_API_KEY=токен nasa
 
 ```
 NASA_EPIC_IMAGE_DIRECTORY=image_nasa_epic
+
 NASA_IMAGE_DIRECTORY=image_nasa
+
 SPACEX_IMAGE_DIRECTORY=image_spacex
 ```
 
 #### Установка времени отправки картинок
-Надо написать переменную с задержкой времени.
+Нужно написать переменную с задержкой времени.
 Например:
 ```
 DELAY=86400
