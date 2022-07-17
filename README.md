@@ -36,19 +36,19 @@ pip install -r requirements.txt
 
 для того чтобы код работал, надо открыть терминал, написать cd и путь до вашего проекта
 
-Для скачивания nasa epic нужно написать
+Для скачивания изображений nasa epic нужно написать
 
 ```
 download_photos_days_nasa_epic.py
 ```
 
-Для скачивания nasa нужно напиисать
+Для скачивания изображений nasa нужно написать
 
 ```
 download_photos_days_nasa.py
 ```
 
-Для скачивания spacex нужно напиисать
+Для скачивания изображений spacex нужно написать
 ```
 download_photos_spacex.py
 ```
