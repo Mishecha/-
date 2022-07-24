@@ -18,9 +18,9 @@ def get_random_path(names_directory):
 if __name__ == "__main__":
     load_dotenv()
 
-    nasa_epic_image_directory = os.environ['nasa_epic_image_directory']
-    nasa_image_directory = os.environ['nasa_image_directory']
-    spacex_image_directory = os.environ['spacex_image_directory']
+    nasa_epic_image_directory = os.environ['NASA_EPIC_IMAGE_DIRECTORY']
+    nasa_image_directory = os.environ['NASA_IMAGE_DIRECTORY']
+    spacex_image_directory = os.environ['SPACEX_IMAGE_DIRECTORY']
     telegram_token = os.environ['TELEGRAM_TOKEN']  
     telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
     delay = int(os.environ['DELAY'])
