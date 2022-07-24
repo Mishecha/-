@@ -32,9 +32,13 @@ if __name__ == "__main__":
         spacex_image_directory,
         nasa_image_directory
     ]
-    
-    while True:
-        file_path = get_random_path(names_directory)
-        with open(file_path, 'rb') as file:
-            bot.send_photo(chat_id=telegram_chat_id, photo=file)
-        time.sleep(delay)
+
+    try:
+        while True:
+            file_path = get_random_path(names_directory)
+            with open(file_path, 'rb') as file:
+                bot.send_photo(chat_id=telegram_chat_id, photo=file)
+            time.sleep(delay)
+    except telegram.error.NetworkError:
+        print('Возникла ошибка сети. Переподключение будет через 25 секунд')
+        time.sleep(25)
