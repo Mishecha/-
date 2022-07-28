@@ -19,15 +19,11 @@ TELEGRAM_TOKEN=токен бота
 NASA_API_KEY=токен nasa
 ```
 
-#### Создание директорий
-Также для проекта необходимо создать директории. Для этого в .env нужно написать их названия:
+#### Создание директории
+Также для проекта необходимо создать директорию. Для этого в .env нужно написать ее название:
 
 ```
-NASA_EPIC_IMAGE_DIRECTORY=image_nasa_epic
-
-NASA_IMAGE_DIRECTORY=image_nasa
-
-SPACEX_IMAGE_DIRECTORY=image_spacex
+SPACE_IMAGE_DIRECTORY=space_image
 ```
 
 #### Установка времени отправки картинок
