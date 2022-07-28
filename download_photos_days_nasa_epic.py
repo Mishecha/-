@@ -29,11 +29,11 @@ def download_photos_nasa_epic(nasa_api_key, nasa_epic_image_directory, number_im
 
 def main():
     load_dotenv()
-    Path("image_nasa_epic").mkdir(parents=True, exist_ok=True)
-    nasa_epic_image_directory = os.environ['NASA_EPIC_IMAGE_DIRECTORY']
+    space_image_directory = os.environ['SPACE_IMAGE_DIRECTORY']
+    Path(space_image_directory).mkdir(parents=True, exist_ok=True)
     nasa_api_key = os.environ['NASA_API_KEY']
 
-    download_photos_nasa_epic(nasa_api_key, nasa_epic_image_directory)
+    download_photos_nasa_epic(nasa_api_key, space_image_directory)
 
 if __name__ == "__main__":
     main()
