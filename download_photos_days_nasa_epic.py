@@ -27,6 +27,7 @@ def download_photos_nasa_epic(nasa_api_key, nasa_epic_image_directory, number_im
 
         download_image(nasa_epic_url, f'{nasa_epic_image_directory}/{number}{nasa_epic_file_name}', nasa_epic_params)
 
+
 def main():
     load_dotenv()
     space_image_directory = os.environ['SPACE_IMAGE_DIRECTORY']
