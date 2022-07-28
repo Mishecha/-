@@ -24,10 +24,10 @@ def download_photos_spacex(spacex_image_directory, spacex_last_launch=66):
 
 def main():
     load_dotenv()
-    Path('image_spacex').mkdir(parents=True, exist_ok=True)
-    spacex_image_directory = os.environ['SPACEX_IMAGE_DIRECTORY']
+    space_image_directory = os.environ['SPACE_IMAGE_DIRECTORY']
+    Path(space_image_directory).mkdir(parents=True, exist_ok=True)
 
-    download_photos_spacex(spacex_image_directory)
+    download_photos_spacex(space_image_directory)
 
 if __name__ == "__main__":
     main()
