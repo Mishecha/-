@@ -25,7 +25,7 @@ def download_photos_days_nasa(nasa_api_key, nasa_image_directory, number_of_nasa
     nasa_url = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(nasa_url, params=params_nasa)
     response.raise_for_status()
-    
+
     for number, image in enumerate(response.json()):
         if image["url"]:
             link_image_nasa = image["url"]
@@ -34,12 +34,13 @@ def download_photos_days_nasa(nasa_api_key, nasa_image_directory, number_of_nasa
             if extension_image_nasa == '.jpg' or '.gif':
                 download_image(link_image_nasa, path_image_nasa, params_nasa)
 
+
 def main():
     load_dotenv()
     space_image_directory = os.environ['SPACE_IMAGE_DIRECTORY']
     Path(space_image_directory).mkdir(parents=True, exist_ok=True)
     nasa_api_key = os.environ['NASA_API_KEY']
-  
+
     download_photos_days_nasa(nasa_api_key, space_image_directory)
 
 if __name__ == "__main__":
