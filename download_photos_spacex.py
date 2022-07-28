@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 from download_image import download_image
 
-  
+
 def download_photos_spacex(spacex_image_directory, spacex_last_launch=66):
     spacex_file_name = 'image_spacex'
     spacex_url = 'https://api.spacexdata.com/v4/launches'
