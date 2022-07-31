@@ -11,15 +11,17 @@ from download_image import download_image
 
 
 def get_extension(user_link):
-    user_unquote_link = urllib.parse.unquote(user_link, encoding='utf-8', errors='replace')
-    parsed_link = urlparse(user_unquote_link)
+    user_quote_link = urllib.parse.unquote(user_link,
+                                           encoding='utf-8', errors='replace')
+    parsed_link = urlparse(user_quote_link)
     path = parsed_link.path
     splitext = os.path.splitext(path)
     file_name, expansion = splitext
     return expansion
 
 
-def download_photos_days_nasa(nasa_api_key, nasa_image_directory, number_of_nasa_images=30):
+def download_photos_days_nasa(nasa_api_key,
+                              nasa_image_directory, number_of_nasa_images=30):
     file_name_nasa = 'image_nasa'
     params_nasa = {'count': number_of_nasa_images, 'api_key': nasa_api_key}
     nasa_url = 'https://api.nasa.gov/planetary/apod'
@@ -30,7 +32,8 @@ def download_photos_days_nasa(nasa_api_key, nasa_image_directory, number_of_nasa
         if image["url"]:
             link_image_nasa = image["url"]
             extension_image_nasa = get_extension(link_image_nasa)
-            path_image_nasa = f'{nasa_image_directory}/{number}{file_name_nasa}{extension_image_nasa}'
+            path_image_nasa = (f'{nasa_image_directory}/{number}'
+                               f'{file_name_nasa}{extension_image_nasa}')
             if extension_image_nasa == '.jpg' or '.gif':
                 download_image(link_image_nasa, path_image_nasa, params_nasa)
 
