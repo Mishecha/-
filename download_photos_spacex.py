@@ -25,7 +25,7 @@ def download_photos_spacex(spacex_image_directory, spacex_last_launch=66):
 
 def main():
     load_dotenv()
-    space_image_directory = os.environ['SPACE_IMAGE_DIRECTORY']
+    space_image_directory = 'space_image'
     Path(space_image_directory).mkdir(parents=True, exist_ok=True)
 
     download_photos_spacex(space_image_directory)
