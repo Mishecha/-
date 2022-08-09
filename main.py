@@ -17,14 +17,15 @@ def get_random_path(name_directory):
 if __name__ == "__main__":
     load_dotenv()
 
-    space_image_directory = os.environ['SPACE_IMAGE_DIRECTORY']
-    telegram_token = os.environ['TELEGRAM_TOKEN']  
+    space_image_directory = 'space_image'
+    telegram_token = os.environ['TELEGRAM_TOKEN']
     telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
     delay = int(os.environ['DELAY'])
     
     bot = telegram.Bot(telegram_token)
 
     try:
+        raise
         while True:
             file_path = get_random_path(space_image_directory)
             with open(file_path, 'rb') as file:
