@@ -25,12 +25,10 @@ if __name__ == "__main__":
     bot = telegram.Bot(telegram_token)
 
     try:
-        raise
         while True:
             file_path = get_random_path(space_image_directory)
             with open(file_path, 'rb') as file:
                 bot.send_photo(chat_id=telegram_chat_id, photo=file)
             time.sleep(delay)
     except telegram.error.NetworkError:
-        print('Возникла ошибка сети. Переподключение будет через 25 секунд')
         time.sleep(25)
