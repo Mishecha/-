@@ -41,7 +41,7 @@ def download_photos_days_nasa(nasa_api_key,
 
 def main():
     load_dotenv()
-    space_image_directory = 'space_image'
+    space_image_directory = os.getenv('SPACE_IMAGE_DIRECTORY', default='space_image')
     Path(space_image_directory).mkdir(parents=True, exist_ok=True)
     nasa_api_key = os.environ['NASA_API_KEY']
 
