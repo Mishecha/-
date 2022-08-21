@@ -17,10 +17,10 @@ def get_random_path(name_directory):
 if __name__ == "__main__":
     load_dotenv()
 
-    space_image_directory = 'space_image'
+    space_image_directory = os.getenv('SPACE_IMAGE_DIRECTORY', default='space_image')
     telegram_token = os.environ['TELEGRAM_TOKEN']
     telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
-    delay = int(os.environ['DELAY'])
+    delay = int(os.getenv('DELAY', default=5))
     
     bot = telegram.Bot(telegram_token)
 
