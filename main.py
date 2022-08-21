@@ -20,7 +20,7 @@ if __name__ == "__main__":
     space_image_directory = os.getenv('SPACE_IMAGE_DIRECTORY', default='space_image')
     telegram_token = os.environ['TELEGRAM_TOKEN']
     telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
-    delay = int(os.getenv('DELAY', default=5))
+    delay = int(os.getenv('DELAY', default=86400))
     
     bot = telegram.Bot(telegram_token)
 
