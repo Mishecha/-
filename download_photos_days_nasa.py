@@ -34,8 +34,9 @@ def download_photos_days_nasa(nasa_api_key,
             extension_image_nasa = get_extension(link_image_nasa)
             path_image_nasa = (f'{nasa_image_directory}/{number}'
                                f'{file_name_nasa}{extension_image_nasa}')
-            if extension_image_nasa == '.jpg' or '.gif':
+            if extension_image_nasa == '.jpg' or extension_image_nasa == '.gif':
                 download_image(link_image_nasa, path_image_nasa, params_nasa)
+
 
 
 def main():
