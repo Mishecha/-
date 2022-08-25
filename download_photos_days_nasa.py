@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import requests
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 from download_image import download_image
 
@@ -40,7 +40,7 @@ def download_photos_days_nasa(nasa_api_key,
 
 
 def main():
-    #load_dotenv()
+    load_dotenv()
     space_image_directory = os.getenv('SPACE_IMAGE_DIRECTORY', default='space_image')
     Path(space_image_directory).mkdir(parents=True, exist_ok=True)
     nasa_api_key = os.environ['NASA_API_KEY']
