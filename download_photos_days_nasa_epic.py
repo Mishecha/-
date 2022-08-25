@@ -28,8 +28,9 @@ def download_photos_nasa_epic(nasa_api_key,
         nasa_epic_url = (f'https://api.nasa.gov/EPIC/archive/natural/'
                          f'{format_date}/png/{nasa_epic_image}.png')
 
-        download_image(nasa_epic_url, f'{nasa_epic_image_directory}/{number}\
-                      {nasa_epic_file_name}', nasa_epic_params)
+        file_name = f'{number}{nasa_epic_file_name}'
+        path_image_nasa_epic = os.path.join(nasa_epic_image_directory, file_name)
+        download_image(nasa_epic_url, path_image_nasa_epic, nasa_epic_params)
 
 
 def main():
