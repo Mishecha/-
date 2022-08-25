@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import requests
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
 from download_image import download_image
 
@@ -32,15 +32,15 @@ def download_photos_days_nasa(nasa_api_key,
         if image["url"]:
             link_image_nasa = image["url"]
             extension_image_nasa = get_extension(link_image_nasa)
-            path_image_nasa = (f'{nasa_image_directory}/{number}'
-                               f'{file_name_nasa}{extension_image_nasa}')
+            file_name = f'{number}{file_name_nasa}{extension_image_nasa}'
+            path_image_nasa = os.path.join(nasa_image_directory, file_name)
             if extension_image_nasa == '.jpg' or extension_image_nasa == '.gif':
                 download_image(link_image_nasa, path_image_nasa, params_nasa)
 
 
 
 def main():
-    load_dotenv()
+    #load_dotenv()
     space_image_directory = os.getenv('SPACE_IMAGE_DIRECTORY', default='space_image')
     Path(space_image_directory).mkdir(parents=True, exist_ok=True)
     nasa_api_key = os.environ['NASA_API_KEY']
