@@ -4,6 +4,7 @@ from os import listdir
 import time
 import random
 
+import requests
 import telegram
 from dotenv import load_dotenv
 
@@ -24,11 +25,14 @@ if __name__ == "__main__":
     
     bot = telegram.Bot(telegram_token)
 
-    try:
-        while True:
+
+    while True:
+        try:
             file_path = get_random_path(space_image_directory)
             with open(file_path, 'rb') as file:
                 bot.send_photo(chat_id=telegram_chat_id, photo=file)
             time.sleep(delay)
-    except telegram.error.NetworkError:
-        time.sleep(25)
+        except requests.ConnectionError:
+            time.sleep(25)
+        except telegram.error.NetworkError:
+            time.sleep(25)
