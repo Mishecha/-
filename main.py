@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 def get_random_path(name_directory):
     random_file = random.choice(listdir(name_directory))
-    random_path = f'{name_directory}/{random_file}'
+    random_path = os.path.join(name_directory, random_file)
     return random_path
     
 
