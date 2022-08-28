@@ -1,8 +1,7 @@
-import urllib.parse
 import os.path
 import os
 from pathlib import Path
-from urllib.parse import urlparse
+import argparse
 
 import requests
 from dotenv import load_dotenv
@@ -10,42 +9,33 @@ from dotenv import load_dotenv
 from download_image import download_image
 
 
-def get_extension(user_link):
-    user_quote_link = urllib.parse.unquote(user_link,
-                                           encoding='utf-8', errors='replace')
-    parsed_link = urlparse(user_quote_link)
-    path = parsed_link.path
-    splitext = os.path.splitext(path)
-    file_name, expansion = splitext
-    return expansion
+def download_photos_spacex(spacex_image_directory, spacex_last_launch):
+    spacex_file_name = 'image_spacex'
+    spacex_url = 'https://api.spacexdata.com/v4/launches'
 
-
-def download_photos_days_nasa(nasa_api_key,
-                              nasa_image_directory, number_of_nasa_images=30):
-    file_name_nasa = 'image_nasa'
-    params_nasa = {'count': number_of_nasa_images, 'api_key': nasa_api_key}
-    nasa_url = 'https://api.nasa.gov/planetary/apod'
-    response = requests.get(nasa_url, params=params_nasa)
+    response = requests.get(spacex_url)
     response.raise_for_status()
 
-    for number, image in enumerate(response.json()):
-        if image["url"]:
-            link_image_nasa = image["url"]
-            extension_image_nasa = get_extension(link_image_nasa)
-            file_name = f'{number}{file_name_nasa}{extension_image_nasa}'
-            path_image_nasa = os.path.join(nasa_image_directory, file_name)
-            if extension_image_nasa == '.jpg' or extension_image_nasa == '.gif':
-                download_image(link_image_nasa, path_image_nasa, params_nasa)
+    spacex_link = response.json(
+    )[spacex_last_launch]['links']['flickr']['original']
 
+    for number, image in enumerate(spacex_link):
+        download_image(image, f'{spacex_image_directory}/{number}'
+                       f'{spacex_file_name}.jpg')
 
 
 def main():
     load_dotenv()
-    space_image_directory = os.getenv('SPACE_IMAGE_DIRECTORY', default='space_image')
+    parser = argparse.ArgumentParser(
+      description='Номер запуска'
+    )
+    parser.add_argument('spacex_id', default=66, 
+                        type=int, nargs='?')
+    spacex_launch = parser.parse_args().spacex_id
+    space_image_directory = os.getenv('SPACE_IMAGE_DIRECTORY', 
+                                      default='space_image')
     Path(space_image_directory).mkdir(parents=True, exist_ok=True)
-    nasa_api_key = os.environ['NASA_API_KEY']
-
-    download_photos_days_nasa(nasa_api_key, space_image_directory)
+    download_photos_spacex(space_image_directory, spacex_launch)
 
 if __name__ == "__main__":
     main()
