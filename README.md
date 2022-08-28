@@ -68,6 +68,7 @@ python download_photos_days_nasa.py
 python download_photos_spacex.py 'номер запуска'
 ```
 Можно еще изменить фотографии из другого запуска, но не обязательно.
+
 А для того, чтобы картинки отправились, нужно написать:
 ```
 python main.py
